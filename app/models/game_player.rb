@@ -1,3 +1,4 @@
 class GamePlayer < ApplicationRecord
-    has_many :players, foreign_key: "player_id", class_name: "User"
+    belongs_to :player, foreign_key: "player_id", class_name: "User"
+    belongs_to :game_room
 end
