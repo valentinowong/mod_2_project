@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  admin_id: 1
+  game_id: 1
+  active: false
+  complete: false
+
+two:
+  admin_id: 1
+  game_id: 1
+  active: false
+  complete: false
