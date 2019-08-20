@@ -2,6 +2,12 @@
 
 <% if session[:user_id] %>
     <h3>Hi, <%= User.find(session[:user_id]).name %></h3>
+
+    <%= link_to "Create a Game Room", games_path %><br>
+    <%= link_to "Join a Game Room", game_rooms_path %>
+
+    <br><br>
+
     <%= form_tag ({controller: 'sessions', action: 'destroy', method: 'post'}) do %>
         <input type=submit value='logout'>
     <% end %>
