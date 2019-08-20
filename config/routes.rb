@@ -8,4 +8,7 @@ Rails.application.routes.draw do
 
   root 'application#welcome'
   
+
+  resources :games, only: [:index, :show, :new, :create]
+  resources :game_rooms, only: [:index, :show, :new, :create]
 end
