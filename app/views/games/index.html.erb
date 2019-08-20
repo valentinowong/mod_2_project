@@ -1,0 +1,9 @@
+<h1>Select from the list of games or create a new game</h1>
+
+<ul>
+<% @games.each do |game| %>
+<li><%= link_to game.name, game_path(game) %></li>
+</ul>
+<%end%>
+
+<%= link_to "Create a New Game", new_game_path %>

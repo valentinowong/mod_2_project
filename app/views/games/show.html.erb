@@ -1,0 +1,16 @@
+<h1><%= @game.name %></h1>
+<p><%= @game.description %></p>
+
+<h4>Missions for <%= @game.name %></h4>
+<ul>
+    <% @game.missions.each do |mission| %>
+        <li><%= mission.name%>: <%= mission.content %></li>
+    <% end %>
+</ul>
+
+<%= form_for @game_room do |f| %>
+<%= f.hidden_field :game_id, value: @game.id %>
+<%= f.submit %>
+<% end%>
+
+
