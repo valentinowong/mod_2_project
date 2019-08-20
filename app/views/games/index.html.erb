@@ -3,7 +3,8 @@
 <ul>
 <% @games.each do |game| %>
 <li><%= link_to game.name, game_path(game) %></li>
+<% end %>
 </ul>
-<%end%>
+
 
 <%= link_to "Create a New Game", new_game_path %>

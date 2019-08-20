@@ -5,12 +5,16 @@
 <ul>
     <% @game.missions.each do |mission| %>
         <li><%= mission.name%>: <%= mission.content %></li>
-    <% end %>
+        <% end %>
 </ul>
+
 
 <%= form_for @game_room do |f| %>
 <%= f.hidden_field :game_id, value: @game.id %>
 <%= f.submit %>
 <% end%>
+<br>
+
+<%= link_to "Return to Game List", games_path %>
 
 
