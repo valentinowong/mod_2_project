@@ -10,5 +10,5 @@ Rails.application.routes.draw do
 
   resources :games, only: [:index, :show, :new, :create]
   resources :game_rooms, only: [:index, :show, :create, :destroy]
-  
+  resources :game_players, only: [:create, :destroy]
 end

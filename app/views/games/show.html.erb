@@ -9,8 +9,8 @@
 </ul>
 
 <%= form_for @game_room do |f| %>
-<%= f.hidden_field :game_id, value: @game.id %>
-<%= f.submit %>
+    <%= f.hidden_field :game_id, value: @game.id %>
+    <%= f.submit %>
 <% end%>
 
 
