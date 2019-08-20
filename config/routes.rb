@@ -6,9 +6,12 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new, :create]
 
-  root 'application#welcome'  
+  root 'application#welcome'
 
   resources :games, only: [:index, :show, :new, :create]
   resources :game_rooms, only: [:index, :show, :create, :destroy]
   resources :game_players, only: [:create, :destroy]
+
+  post '/game_room/:id/activate' => 'game_rooms#activate', as: 'activate_game_room'
+  post '/game_room/:id/deactivate' => 'game_rooms#deactivate', as: 'deactivate_game_room'
 end

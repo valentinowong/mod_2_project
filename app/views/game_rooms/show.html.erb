@@ -4,6 +4,34 @@
         <li>Creator: <%= @game_room.admin_name %></li>
     </ul>
 
+    <h3>Current Players</h3>
+        <% @game_room.players.each do |player| %>
+
+            <ul>
+                <li><%= player.name %></li>
+            </ul>
+
+        <% end %>
+
+<% if @game_room.active %>
+
+    <h3>THIS GAME IS ACTIVE</h3>
+    
+<% end %>
+
+<% if @game_room.active || (@game_room.admin == @current_user) %>
+
+    <h3>Missions</h3>
+    <% @game_room.missions.each do |mission| %>
+
+        <ul>
+            <li><%= mission.name %>: <%= mission.content %></li>
+        </ul>
+
+    <% end %>
+
+<% end %>
+
 <% if @game_room.players.include?(@current_user) %>
 
     <p>You're In This Game!</p>
@@ -13,7 +41,7 @@
 
     <% end %>
 
-<% else %>
+<% elsif @game_room.admin != @current_user %>
 
     <%= form_for @game_player do |f| %>
         <%= f.hidden_field :game_room_id, value: @game_room.id %>
@@ -25,6 +53,14 @@
 <% end %>
 
 <% if @game_room.admin == @current_user %>
+
+    <p>This is your game!</p>
+
+    <% if @game_room.active %>
+        <%= link_to "Deactivate This Game", deactivate_game_room_path(@game_room), method: :post %><br>
+    <% else %>
+        <%= link_to "Activate This Game", activate_game_room_path(@game_room), method: :post %><br>
+    <% end %>
 
     <%= link_to 'Delete This Game Room', game_room_path(@game_room), method: :delete %>  
 

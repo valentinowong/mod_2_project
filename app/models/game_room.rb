@@ -3,6 +3,7 @@ class GameRoom < ApplicationRecord
     belongs_to :admin, class_name: "User", foreign_key: "admin_id"
     has_many :game_players
     has_many :players, through: :game_players
+    has_many :missions, through: :game
 
     def game_name
         game.name
@@ -15,4 +16,13 @@ class GameRoom < ApplicationRecord
     def admin_name
         admin.name
     end
+
+    def activate
+        self.update(active: true)
+    end
+
+    def deactivate
+        self.update(active: false)
+    end
+
 end
