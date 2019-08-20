@@ -1,0 +1,13 @@
+<h1><%= @game_room.game_name %></h1>
+    <p><%= @game_room.game_description %></p>
+    <p>Creator: <%= @game_room.admin_name %></p>
+
+<% if @game_room.players.include?(@current_user) %>
+
+
+<% else %>
+
+    <%= link_to "Join This Game", "/" %>
+    <%= link_to "Return to Game Room List", game_rooms_path %>
+
+<% end %>

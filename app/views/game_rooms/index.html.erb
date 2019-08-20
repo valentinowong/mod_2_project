@@ -1,0 +1,11 @@
+<h1>All Game Rooms</h1>
+
+<h3>Choose a Game Room!</h3>
+
+<% @game_rooms.each do |game_room| %>
+
+    <h5><%= link_to game_room.game_name, game_room_path(game_room) %></h5>
+        <p><%= game_room.game_description %></p>
+        <p>Creator: <%= game_room.admin_name %></p>
+
+<% end %>
