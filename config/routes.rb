@@ -6,9 +6,9 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new, :create]
 
-  root 'application#welcome'
-  
+  root 'application#welcome'  
 
   resources :games, only: [:index, :show, :new, :create]
-  resources :game_rooms, only: [:index, :show, :new, :create]
+  resources :game_rooms, only: [:index, :show, :create, :destroy]
+  
 end
