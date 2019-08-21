@@ -1,5 +1,13 @@
 class UsersController < ApplicationController
     skip_before_action :require_logged_in, only: [:new, :create]
+
+
+    def update 
+      @user = User.find(params[:id])
+      @user.images.attach(params[:image])
+      # @mission.images.attach(params[:images])
+      redirect_to game_room(@user.game_room)
+    end 
     
     def new
       @user = User.new

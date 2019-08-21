@@ -11,3 +11,11 @@
     <%= link_to "Return to Game Room List", game_rooms_path %>
 
 <% end %>
+
+<h3>Upload your photos here. Whoever finishes the missions first via photo uploads wins!</h3>
+
+<%= form_tag(user_path(@current_user), method: :patch) do %>
+  <label>Post photo:</label><br>
+  <%= file_field_tag :image %><br>
+  <%= submit_tag "Submit Photo" %>
+<% end %>

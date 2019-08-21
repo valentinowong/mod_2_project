@@ -10,6 +10,8 @@ class GameRoomsController < ApplicationController
         @game_rooms = GameRoom.all
     end
 
+ 
+
     def show
         @current_user = current_user
     end
