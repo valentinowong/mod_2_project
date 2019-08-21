@@ -91,7 +91,17 @@
     <p><%= comment.mission_name %></p>
     <p><%= image_tag comment.photo, size: "60x40" %></p><br>
     <p>"<%= comment.content %>" -<%= comment.user_name %></p>
+    <% if comment.approved %>
+        <p>This comment has been approved!</p>
+    <% end %>
     
     <br><br>
+   <% if @game_room.admin == @current_user %>
+        <%= form_for comment do |f| %>
+        <%= f.label :"mark if this photo meets the mission expectations"%>
+        <%= f.check_box :approved %><br>
+        <%= f.submit %> 
+        <% end %>
+        <% end %>
 
 <% end %>

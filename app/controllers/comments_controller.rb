@@ -4,6 +4,12 @@ class CommentsController < ApplicationController
         @comment = Comment.create(comment_params)
         redirect_to game_room_path(@comment.game_room)
     end
+
+    def update 
+        @comment = Comment.find(params[:id])
+        @comment.update(approved: true)
+        redirect_to game_room_path(@comment.game_room)
+    end 
     
     private
 
