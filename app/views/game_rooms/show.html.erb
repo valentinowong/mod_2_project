@@ -28,6 +28,24 @@
             <li><%= mission.name %>: <%= mission.content %></li>
         </ul>
 
+        <h4>Completed? Upload your photo here!</h4>
+        <%= form_for @comment do |f| %>
+            
+            <%= f.hidden_field :game_room_id, value: @game_room.id %>
+            <%= f.hidden_field :user_id, value: @current_user.id %>
+            <%= f.hidden_field :mission_id, value: mission.id %>
+            
+            <%= f.label :photo %>
+            <%= f.file_field :photo %><br>
+
+            <%= f.label :content %>
+            <%= f.text_field :content %><br>
+
+            <%= f.submit "Create Comment"%>
+
+        <% end %>
+
+
     <% end %>
 
 <% end %>
@@ -63,5 +81,17 @@
     <% end %>
 
     <%= link_to 'Delete This Game Room', game_room_path(@game_room), method: :delete %>  
+
+<% end %>
+
+<h3>Comments</h3>
+
+<% @game_room.comments.each do |comment| %>
+
+    <p><%= comment.mission_name %></p>
+    <p><%= image_tag comment.photo, size: "60x40" %></p><br>
+    <p>"<%= comment.content %>" -<%= comment.user_name %></p>
+    
+    <br><br>
 
 <% end %>

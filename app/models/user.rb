@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-    has_many :photos
     has_many :comments
     has_many :admin_game_rooms, foreign_key: "admin_id", class_name: "GameRoom"
     has_many :game_players, foreign_key: "player_id", class_name: "GamePlayer"

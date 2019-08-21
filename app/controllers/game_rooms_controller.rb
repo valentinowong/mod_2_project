@@ -14,6 +14,7 @@ class GameRoomsController < ApplicationController
         @current_user = current_user
         @current_game_player = GamePlayer.find_by(player_id: @current_user.id)
         @game_player = GamePlayer.new
+        @comment = Comment.new
     end
 
     def destroy

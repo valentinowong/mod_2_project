@@ -4,6 +4,7 @@ class GameRoom < ApplicationRecord
     has_many :game_players
     has_many :players, through: :game_players
     has_many :missions, through: :game
+    has_many :comments
 
     def game_name
         game.name
