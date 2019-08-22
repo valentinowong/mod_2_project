@@ -11,7 +11,30 @@
                 <li><%= player.name %></li>
             <% end %>
         </ul>
+    
+    <% if @game_room.players.include?(@current_user) %>
+
+        <p>You're In This Game!</p>
+        <% if !!@current_game_player && (@game_room.admin != @current_user) %>
+
+            <%= link_to 'Leave This Game Room', game_player_path(@current_game_player), method: :delete %>  
+
+        <% end %>
+
+    <% elsif @game_room.admin != @current_user %>
+
+        <%= form_for @game_player do |f| %>
+            <%= f.hidden_field :game_room_id, value: @game_room.id %>
+            <%= f.submit "Join This Game"%>
+        <% end%><br>
+
+        <%= link_to "Return to Game Room List", game_rooms_path %><br>
+
+    <% end %>
+
 </div>
+
+
 
 <% if !@game_room.players_who_completed_all_missions.empty? %>
     <div class="game-room winner">
@@ -57,26 +80,6 @@
 
         <% end %>
     </div>
-<% end %>
-
-<% if @game_room.players.include?(@current_user) %>
-
-    <p>You're In This Game!</p>
-    <% if !!@current_game_player && (@game_room.admin != @current_user) %>
-
-        <%= link_to 'Leave This Game Room', game_player_path(@current_game_player), method: :delete %>  
-
-    <% end %>
-
-<% elsif @game_room.admin != @current_user %>
-
-    <%= form_for @game_player do |f| %>
-        <%= f.hidden_field :game_room_id, value: @game_room.id %>
-        <%= f.submit "Join This Game"%>
-    <% end%><br>
-
-    <%= link_to "Return to Game Room List", game_rooms_path %><br>
-
 <% end %>
 
 <% if @game_room.admin == @current_user %>
