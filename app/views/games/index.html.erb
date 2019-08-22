@@ -1,10 +1,12 @@
+<div class="container">
 <h1 class="center">Select from the list of games or create a new game</h1>
 
 <h4>Game List:<h4>
 <% @games.each do |game| %>
-<%= link_to game.name, game_path(game),class: "btn btn-secondary btn-lg" %><br>
+<%= link_to game.name, game_path(game),class: "btn btn-secondary btn-lg" %><br><br>
 <% end %>
 
 
 <br><br>
 <%= link_to "Create a New Game", new_game_path, class: "btn btn-lg btn-primary" %>
+</div>
