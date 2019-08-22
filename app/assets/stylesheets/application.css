@@ -57,6 +57,7 @@ p.center {
   font-family: 'DM Serif Text', serif;
 }
 
+
 img {
   width: 500px;
   height: 150px;
@@ -74,5 +75,10 @@ h3.center {
  }
 
  .green {
-   color: #E3F09B
+   color: #E3F09B;
+ }
+
+ h4.game {
+  font-family: 'Permanent Marker', cursive;
+  font-family: 'DM Serif Text', serif;
  }

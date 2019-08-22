@@ -1,20 +1,20 @@
-<h1><%= @game.name %></h1>
-<p><%= @game.description %></p>
+<h1 class="center"><%= @game.name %></h1>
+<p class="center"><%= @game.description %></p>
 
-<h4>Missions for <%= @game.name %></h4>
-<ul>
+<h4 class="game">Missions for <%= @game.name %></h4>
+<ul class="list-group">
     <% @game.missions.each do |mission| %>
-        <li><%= mission.name%>: <%= mission.content %></li>
+        <li class="list-group-item list-group-item-dark"><%= mission.name%>: <%= mission.content %></li>
         <% end %>
 </ul>
 
 
 <%= form_for @game_room do |f| %>
     <%= f.hidden_field :game_id, value: @game.id %>
-    <%= f.submit %>
+    <button type="submit" class="btn btn-primary">Make Gameroom</button>
 <% end%>
 <br>
 
-<%= link_to "Return to Game List", games_path %>
+<%= link_to "Return to Game List", games_path, class: "btn btn-lg btn-primary" %>
 
 
