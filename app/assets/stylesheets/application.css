@@ -18,7 +18,7 @@
  @import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
 
  body {
-  background-color: #87B6A7
+  background-color: #87B6A7;
  }
 
  nav.navbar {
@@ -78,7 +78,7 @@ h3.center {
    color: #E3F09B;
  }
 
- h4.game {
+ h4 {
   font-family: 'Permanent Marker', cursive;
   font-family: 'DM Serif Text', serif;
  }

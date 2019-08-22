@@ -7,6 +7,8 @@ class User < ApplicationRecord
     has_secure_password
 
     validates :name, presence: true
+    validates :password, presence: true
+    validates :password, length: {minimum: 6}
     
     # user#approved_comments - Returns an array of all of this *player's* comments that have been approved by an admin
     def approved_comments
