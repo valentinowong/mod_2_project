@@ -1,40 +1,25 @@
 
 <div class="game-info">
-    <h1><%= @game_room.admin_name %>'s <%= @game_room.game_name %></h1>
+    <h1><%= @game_room.admin_name %>'s <%= @game_room.game_name %><%= " - ACTIVE" if @game_room.active %></h1>
         <p><%= @game_room.game_description %></p>
 </div>
 
-<div class="game-room players">
-    <h2>Current Players</h2>
-        <ul>
-            <% @game_room.players.each do |player| %>
-                <li><%= player.name %></li>
-            <% end %>
-        </ul>
-    
-    <% if @game_room.players.include?(@current_user) %>
+<%# Show this section if the current user is the admin of this game room%>
+<% if @game_room.admin == @current_user %>
+    <div class="game-room admin">
 
-        <p>You're In This Game!</p>
-        <% if !!@current_game_player && (@game_room.admin != @current_user) %>
+        <h2>Admin Powers:</h2>
 
-            <%= link_to 'Leave This Game Room', game_player_path(@current_game_player), method: :delete %>  
-
+        <% if @game_room.active %>
+            <%= button_to "Deactivate This Game", deactivate_game_room_path(@game_room), method: :post %><br>
+        <% else %>
+            <%= button_to "Activate This Game", activate_game_room_path(@game_room), method: :post %><br>
         <% end %>
 
-    <% elsif @game_room.admin != @current_user %>
+        <%= button_to 'Delete This Game Room', game_room_path(@game_room), method: :delete, data: { confirm: "Are you sure?" } %>
 
-        <%= form_for @game_player do |f| %>
-            <%= f.hidden_field :game_room_id, value: @game_room.id %>
-            <%= f.submit "Join This Game"%>
-        <% end%><br>
-
-        <%= link_to "Return to Game Room List", game_rooms_path %><br>
-
-    <% end %>
-
-</div>
-
-
+    </div>
+<% end %>
 
 <% if !@game_room.players_who_completed_all_missions.empty? %>
     <div class="game-room winner">
@@ -42,11 +27,40 @@
     </div>
 <% end %>
 
-<% if @game_room.active %>
-
-    <h1>THIS GAME IS ACTIVE</h1>
+<div class="game-room players">
+    <h2>Current Players</h2>
+        <ul>
+            <% @game_room.players.each do |player| %>
+                <% if player == @current_user %>
+                    <li class='bold'><%= player.name %></li>
+                <% else %>
+                    <li><%= player.name %></li>
+                <% end %>
+            <% end %>
+        </ul>
     
-<% end %>
+    <%# Show this section if the current user is a player in this game room%>
+    <% if @game_room.players.include?(@current_user) %>
+
+        <% if !!@current_game_player && (@game_room.admin != @current_user) %>
+
+            <%= button_to 'Leave This Game Room', game_player_path(@current_game_player), method: :delete %>
+
+        <% end %>
+    
+    <%# Show this section if the current user is not the admin and they're not a player in this game room%>
+    <% elsif @game_room.admin != @current_user %>
+
+        <%= form_for @game_player do |f| %>
+            <%= f.hidden_field :game_room_id, value: @game_room.id %>
+            <%= f.submit "Join This Game"%>
+        <% end%>
+
+        <%= link_to "Return to Game Room List", game_rooms_path %><br>
+
+    <% end %>
+
+</div>
 
 <% if @game_room.active || (@game_room.admin == @current_user) %>
 
@@ -80,20 +94,6 @@
 
         <% end %>
     </div>
-<% end %>
-
-<% if @game_room.admin == @current_user %>
-
-    <p>This is your game!</p>
-
-    <% if @game_room.active %>
-        <%= link_to "Deactivate This Game", deactivate_game_room_path(@game_room), method: :post %><br>
-    <% else %>
-        <%= link_to "Activate This Game", activate_game_room_path(@game_room), method: :post %><br>
-    <% end %>
-
-    <%= link_to 'Delete This Game Room', game_room_path(@game_room), method: :delete %>  
-
 <% end %>
 
 <h3>Comments</h3>

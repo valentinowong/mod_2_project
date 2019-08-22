@@ -37,3 +37,7 @@
    transform: scale(1.05);
    /* outline: 5px solid #87B6A7; */
  }
+
+ .bold {
+   font-weight: bold;
+ }
