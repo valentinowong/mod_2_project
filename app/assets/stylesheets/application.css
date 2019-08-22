@@ -69,3 +69,6 @@ h3.center {
   font-family: 'Permanent Marker', cursive;
   font-family: 'DM Serif Text', serif;
 }
+ .bold {
+   font-weight: bold;
+ }
