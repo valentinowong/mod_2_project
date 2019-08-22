@@ -1,14 +1,17 @@
-<%= form_for @user do |f| %>
+<div class="container">
+<%= form_for @user, html: {class: 'form-signin'} do |f| %>
+<h2 class="form-signin-heading">Sign up</h2>
 
-    <%= f.label :name %>
-    <%= f.text_field :name %><br>
+    <%= f.label :name, {class: "sr-only"} %>
+    <%= f.text_field :name,{ id: "inputEmail", class: "form-control", placeholder: "Name"} %><br>
 
-    <%= f.label :password %>
-    <%= f.password_field :password %><br>
+    <%= f.label :password, {class: "sr-only"} %>
+    <%= f.password_field :password,{ id: "inputEmail", class: "form-control", placeholder: "Password"} %><br>
 
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %><br>
+    <%= f.label :password_confirmation, {class: "sr-only"} %>
+    <%= f.password_field :password_confirmation,{ id: "inputEmail", class: "form-control", placeholder: "Password Confirmation"} %><br>
 
-    <%= f.submit "Submit" %>
+    <%= f.submit "Submit", {class: "btn btn-lg btn-primary btn-block"} %>
 
 <% end %>
+</div>

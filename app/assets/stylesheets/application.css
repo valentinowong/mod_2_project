@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  */
+ @import url('https://fonts.googleapis.com/css?family=DM+Serif+Text|Permanent+Marker&display=swap');
 
  @import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
 
@@ -37,3 +38,34 @@
    transform: scale(1.05);
    /* outline: 5px solid #87B6A7; */
  }
+
+ h1 {
+    font-family: 'Permanent Marker', cursive;
+   font-weight: 100;
+   letter-spacing: 5px;
+   color: black;
+   transition: 0.2s;
+ }
+
+ .center {
+  text-align: center;
+}
+
+p.center {
+  text-align: center;
+  font-family: 'Permanent Marker', cursive;
+  font-family: 'DM Serif Text', serif;
+}
+
+img {
+  width: 500px;
+  height: 150px;
+  display: block;
+  margin: 0 auto;
+}
+
+h3.center {
+  text-align: center;
+  font-family: 'Permanent Marker', cursive;
+  font-family: 'DM Serif Text', serif;
+}

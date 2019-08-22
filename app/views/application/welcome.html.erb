@@ -1,10 +1,13 @@
-<h1>Welcome to Pic Hunt</h1>
+<h1 class="center">Welcome to K-NINE</h1>
+<p class="center">K-NINE is a game of speed and intelect. The objective is to complete all of the missions before your competition. Only one will prevail. Good luck and K-NINE on. </p>
+<img src="https://www.colbaf.org/wp-content/uploads/2018/07/scavenger-hunt-banner.png"><br><br>
 
 <% if session[:user_id] %>
-    <h3>Hi, <%= User.find(session[:user_id]).name %></h3>
-
-    <%= link_to "Create a Game Room", games_path %><br>
-    <%= link_to "Join a Game Room", game_rooms_path %>
+    <h3 class="center">Hello, <%= User.find(session[:user_id]).name %></h3>
+  
+    <%= link_to "Create a Game Room", games_path, class: "btn btn-primary btn-lg btn-block" %><br>
+  
+    <%= link_to "Join a Game Room", game_rooms_path, class: "btn btn-secondary btn-lg btn-block" %>
 
     <br><br>
 
@@ -12,8 +15,8 @@
         <input type=submit value='logout'>
     <% end %>
 <% else%>
-    <ul>
-        <li><%= link_to 'Sign Up', new_user_path %></li><br>
-        <li><%= link_to 'Login', login_path %></li>
-    </ul>
+  
+       <%= link_to 'Sign Up', new_user_path, class: "btn btn-primary btn-lg btn-block"%>
+        <%= link_to 'Login', login_path, class: "btn btn-secondary btn-lg btn-block" %>
+  
 <% end %>
