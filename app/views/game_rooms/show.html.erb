@@ -1,59 +1,62 @@
-<h1><%= @game_room.game_name %></h1>
-    <ul>
-        <li><%= @game_room.game_description %></li>
-        <li>Creator: <%= @game_room.admin_name %></li>
-    </ul>
 
-    <h3>Current Players</h3>
-        <% @game_room.players.each do |player| %>
+<div class="game-info">
+    <h1><%= @game_room.admin_name %>'s <%= @game_room.game_name %></h1>
+        <p><%= @game_room.game_description %></p>
+</div>
 
-            <ul>
+<div class="game-room players">
+    <h2>Current Players</h2>
+        <ul>
+            <% @game_room.players.each do |player| %>
                 <li><%= player.name %></li>
-            </ul>
-
-        <% end %>
+            <% end %>
+        </ul>
+</div>
 
 <% if !@game_room.players_who_completed_all_missions.empty? %>
-
-    <h3>This game's winner is <%= @game_room.winner_name %>!</h3>
-
+    <div class="game-room winner">
+        <h3>This game's winner is <%= @game_room.winner_name %>!</h3>
+    </div>
 <% end %>
 
 <% if @game_room.active %>
 
-    <h3>THIS GAME IS ACTIVE</h3>
+    <h1>THIS GAME IS ACTIVE</h1>
     
 <% end %>
 
 <% if @game_room.active || (@game_room.admin == @current_user) %>
 
-    <h3>Missions</h3>
-    <% @game_room.missions.each do |mission| %>
+    <div class="game-room missions">
 
-        <ul>
-            <li><%= mission.name %>: <%= mission.content %></li>
-        </ul>
+        <h2>Missions</h2>
+        <% @game_room.missions.each do |mission| %>
 
-        <h4>Completed? Upload your photo here!</h4>
-        <%= form_for @comment do |f| %>
-            
-            <%= f.hidden_field :game_room_id, value: @game_room.id %>
-            <%= f.hidden_field :user_id, value: @current_user.id %>
-            <%= f.hidden_field :mission_id, value: mission.id %>
-            
-            <%= f.label :photo %>
-            <%= f.file_field :photo %><br>
+            <h3><%= mission.name %>: <%= mission.content %></h3>
 
-            <%= f.label :content %>
-            <%= f.text_field :content %><br>
+            <% if @game_room.admin != @current_user %>
+                <h4>Upload your photo here:</h4>
 
-            <%= f.submit "Create Comment"%>
+                <%= form_for @comment do |f| %>
+                    
+                    <%= f.hidden_field :game_room_id, value: @game_room.id %>
+                    <%= f.hidden_field :user_id, value: @current_user.id %>
+                    <%= f.hidden_field :mission_id, value: mission.id %>
+                    
+                    <%= f.label :photo %>
+                    <%= f.file_field :photo %><br>
+
+                    <%= f.label :content %>
+                    <%= f.text_field :content %><br>
+
+                    <%= f.submit "Submit" %>
+
+                <% end %>
+
+            <% end %>
 
         <% end %>
-
-
-    <% end %>
-
+    </div>
 <% end %>
 
 <% if @game_room.players.include?(@current_user) %>
