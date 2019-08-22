@@ -8,6 +8,22 @@ class User < ApplicationRecord
 
     validates :name, presence: true
     
+    # user#rejected_comments - Returns an array of all of this *player's* comments that have been rejected by an admin
+    def unreviewed_comments
+        comments.select {|comment| comment.approved.nil? }
+    end
+
+    # user#game_room_unreviewed_comments - Returns an array of all this *player's* unreviewed comments for a specific game room
+    def game_room_unreviewed_comments(game_room)
+        array = unreviewed_comments.select {|comment| comment.game_room == game_room }
+        array.sort_by {|comment| comment.datetime }
+    end
+
+    # user#game_room_unreviewed_missions - Returns an array of all this *player's* unreviewed missions for a specific game room
+    def game_room_unreviewed_missions(game_room)
+        game_room_unreviewed_comments(game_room).map {|comment| comment.mission }.uniq
+    end
+
     # user#approved_comments - Returns an array of all of this *player's* comments that have been approved by an admin
     def approved_comments
         comments.select {|comment| comment.approved == true }

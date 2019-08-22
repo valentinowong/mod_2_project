@@ -74,7 +74,7 @@ h3.center {
    font-weight: bold;
  }
 
- .green {
+ .green-font {
    color: #E3F09B;
  }
 
@@ -82,3 +82,26 @@ h3.center {
   font-family: 'Permanent Marker', cursive;
   font-family: 'DM Serif Text', serif;
  }
+
+h4.green-border {
+   border: 4px solid #E3F09B;
+   display: inline;
+ }
+
+h4.orange-border {
+  border: 4px solid #F7D08A;
+  display: inline;
+}
+
+h4.red-border {
+  border: 4px solid #F79F79;
+  display: inline;
+}
+
+.game-room.missions {
+  margin: 20px;
+}
+
+.mission {
+  margin: 15px;
+}
