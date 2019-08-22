@@ -14,4 +14,26 @@
  *= require_self
  */
 
- 
+ @import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
+
+ body {
+  background-color: #87B6A7
+ }
+
+ nav.navbar {
+   background-color: #5B5941;
+ }
+
+ nav.navbar a.navbar-brand {
+   font-family: 'Permanent Marker', cursive;
+   font-weight: 100;
+   letter-spacing: 5px;
+   color: #fff;
+   transition: 0.2s;
+ }
+
+ nav.navbar a.navbar-brand:hover {
+   color: #D2D1CB;
+   transform: scale(1.05);
+   /* outline: 5px solid #87B6A7; */
+ }
