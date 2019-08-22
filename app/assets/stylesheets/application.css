@@ -39,7 +39,7 @@
    /* outline: 5px solid #87B6A7; */
  }
 
- h1 {
+ h1.center {
     font-family: 'Permanent Marker', cursive;
    font-weight: 100;
    letter-spacing: 5px;
@@ -57,6 +57,7 @@ p.center {
   font-family: 'DM Serif Text', serif;
 }
 
+
 img {
   width: 500px;
   height: 150px;
@@ -71,4 +72,9 @@ h3.center {
 }
  .bold {
    font-weight: bold;
+ }
+
+ h4.game {
+  font-family: 'Permanent Marker', cursive;
+  font-family: 'DM Serif Text', serif;
  }
