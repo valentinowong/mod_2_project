@@ -13,6 +13,12 @@
 
         <% end %>
 
+<% if !@game_room.players_who_completed_all_missions.empty? %>
+
+    <h3>This game's winner is <%= @game_room.winner_name %>!</h3>
+
+<% end %>
+
 <% if @game_room.active %>
 
     <h3>THIS GAME IS ACTIVE</h3>

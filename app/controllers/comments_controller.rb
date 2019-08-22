@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
 
     def create
         @comment = Comment.create(comment_params)
+        @comment.update(datetime: Time.now)
         redirect_to game_room_path(@comment.game_room)
     end
 
