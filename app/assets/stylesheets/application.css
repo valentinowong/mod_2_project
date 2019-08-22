@@ -39,7 +39,7 @@
    /* outline: 5px solid #87B6A7; */
  }
 
- h1 {
+ h1.center {
     font-family: 'Permanent Marker', cursive;
    font-weight: 100;
    letter-spacing: 5px;
@@ -71,4 +71,8 @@ h3.center {
 }
  .bold {
    font-weight: bold;
+ }
+
+ .green {
+   color: #E3F09B
  }

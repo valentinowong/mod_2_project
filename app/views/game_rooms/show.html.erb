@@ -1,6 +1,9 @@
 
 <div class="game-info">
-    <h1><%= @game_room.admin_name %>'s <%= @game_room.game_name %><%= " - ACTIVE" if @game_room.active %></h1>
+    <h1><%= @game_room.admin_name %>'s <%= @game_room.game_name %></h1>
+    <% if @game_room.active %>
+        <h2 class="green">ACTIVE</h2>
+    <% end %>
         <p><%= @game_room.game_description %></p>
 </div>
 
@@ -62,6 +65,8 @@
 
 </div>
 
+
+<%# Show this section if the game is active or if this is the current user is the game room admin%>
 <% if @game_room.active || (@game_room.admin == @current_user) %>
 
     <div class="game-room missions">
@@ -69,11 +74,10 @@
         <h2>Missions</h2>
         <% @game_room.missions.each do |mission| %>
 
-            <h3><%= mission.name %>: <%= mission.content %></h3>
+            <h4><%= mission.name %>: <%= mission.content %></h4>
 
             <% if @game_room.admin != @current_user %>
-                <h4>Upload your photo here:</h4>
-
+            
                 <%= form_for @comment do |f| %>
                     
                     <%= f.hidden_field :game_room_id, value: @game_room.id %>
@@ -83,7 +87,7 @@
                     <%= f.label :photo %>
                     <%= f.file_field :photo %><br>
 
-                    <%= f.label :content %>
+                    <%= f.label "Add a Comment" %>
                     <%= f.text_field :content %><br>
 
                     <%= f.submit "Submit" %>
