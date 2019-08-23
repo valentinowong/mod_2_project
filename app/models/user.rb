@@ -10,7 +10,11 @@ class User < ApplicationRecord
     validates :password, presence: true
     validates :password, length: {minimum: 6}
     
-    # user#rejected_comments - Returns an array of all of this *player's* comments that have been rejected by an admin
+    def comments_sorted_most_recent_first
+        comments.sort_by {|comment| comment.datetime}.reverse
+    end
+
+    # user#unreviewed_comments - Returns an array of all of this *player's* comments that have not been reviewed by an admin
     def unreviewed_comments
         comments.select {|comment| comment.approved.nil? }
     end
@@ -24,6 +28,22 @@ class User < ApplicationRecord
     # user#game_room_unreviewed_missions - Returns an array of all this *player's* unreviewed missions for a specific game room
     def game_room_unreviewed_missions(game_room)
         game_room_unreviewed_comments(game_room).map {|comment| comment.mission }.uniq
+    end
+
+    # user#rejected_comments - Returns an array of all of this *player's* comments that have been rejected by an admin
+    def rejected_comments
+        comments.select {|comment| comment.approved == false }
+    end
+
+    # user#game_room_rejected_comments - Returns an array of all this *player's* rejected comments for a specific game room
+    def game_room_rejected_comments(game_room)
+        array = rejected_comments.select {|comment| comment.game_room == game_room }
+        array.sort_by {|comment| comment.datetime }
+    end
+
+    # user#game_room_rejected_missions - Returns an array of all this *player's* missions for a specific game room that have rejected comments
+    def game_room_rejected_missions(game_room)
+        game_room_rejected_comments(game_room).map {|comment| comment.mission }.uniq
     end
 
     # user#approved_comments - Returns an array of all of this *player's* comments that have been approved by an admin

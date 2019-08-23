@@ -1,0 +1,95 @@
+<div class="container">
+<div class="game-info">
+    <h1><%= @game_room.admin_name %>'s <%= @game_room.game_name %></h1>
+    <% if @game_room.winner == @current_user %>
+        <div class="text-success">
+            <h2>You won this game!</h2>
+        </div>
+    <% elsif !@game_room.players_who_completed_all_missions.empty? %>
+        <div class="text-success">
+            <h2>This game's winner is <%= @game_room.winner_name %>!</h2>
+        </div>
+    <% elsif @game_room.active%>
+        <h2 class="text-success">ACTIVE</h2>
+    <% end %>
+        <p><%= @game_room.game_description %></p>
+</div>
+
+<%# Show this section if the current user is the admin of this game room%>
+<% if @game_room.admin == @current_user %>
+    <div class="game-room admin">
+
+        <h2>Admin Powers:</h2>
+
+        <% if @game_room.active %>
+            <%= button_to "Deactivate This Game", deactivate_game_room_path(@game_room), method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %><br>
+        <% else %>
+            <%= button_to "Activate This Game", activate_game_room_path(@game_room), method: :post, class: "btn btn-success" %><br>
+        <% end %>
+
+        <% if @game_room.complete  %>
+            <%= button_to "Mark Game Incomplete", uncomplete_game_room_path(@game_room), method: :post, class: "btn btn-danger" %><br>
+        <% else %>
+            <%= button_to "Mark Game Complete", complete_game_room_path(@game_room), method: :post, class: "btn btn-success" %><br>
+        <% end %>
+
+        <%= button_to 'Delete This Game Room', game_room_path(@game_room), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %><br>
+
+        
+
+        <%= link_to "Return to Game Room Page", game_room_path(@game_room), class: "btn btn-primary" %>
+
+    </div>
+<% end %>
+
+<h3>Comments</h3>
+
+    <% @game_room.game_room_unreviewed_comments.each do |comment| %>
+        
+        <div class="card border-secondary mb-3">
+            <div class="card-header">
+
+                <% if comment.approved %>
+                    <h5 class="card-title">✅ <%= comment.mission_name %></h5>
+                <% elsif comment.approved == false %>
+                    <h5 class="card-title">🚫 <%= comment.mission_name %></h5>
+                <% else %>
+                    <h5 class="card-title"><%= comment.mission_name %></h5>
+                <% end %>
+                <p><%= comment.mission_content %></p>
+
+                <% if @game_room.admin == @current_user %>
+
+                        <%= form_for comment do |f| %>
+                            <%= f.hidden_field :approved, value: true %>
+                            <%= f.submit "Approve", class: "btn btn-success" %>
+                        <% end%>
+
+                        <%= form_for comment do |f| %>
+                            <%= f.hidden_field :approved, value: false %>
+                            <%= f.submit "Reject", class: "btn btn-danger"%>
+                        <% end%>
+
+                <% end %>
+            </div>
+            <%= image_tag comment.photo, class: "card-img-top", class: "img-fluid" %>
+            
+            <div class="card-body text-center">
+                
+                <% if !comment.content.empty? %>
+                    <p class="card-text">"<%= comment.content %>" -<%= link_to comment.user_name, user_path(comment.user) %></p>
+                <% else %>
+                    <p class="card-text">-<%= link_to comment.user_name, user_path(comment.user) %></p>
+                <% end %>
+
+            </div>
+
+            <div class="card-footer text-muted">
+
+                <%= comment.display_datetime %>
+
+            </div>
+
+        </div>
+
+    <% end %>

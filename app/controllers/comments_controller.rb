@@ -8,8 +8,8 @@ class CommentsController < ApplicationController
 
     def update 
         @comment = Comment.find(params[:id])
-        @comment.update(approved: true)
-        redirect_to game_room_path(@comment.game_room)
+        @comment.update(comment_params)
+        redirect_back(fallback_location: root_path)
     end 
     
     private

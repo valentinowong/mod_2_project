@@ -26,6 +26,14 @@ class GameRoom < ApplicationRecord
         self.update(active: false)
     end
 
+    def mark_complete
+        self.update(complete: true)
+    end
+
+    def mark_uncomplete
+        self.update(complete: false)
+    end
+
     # game_room#players_completed_missions_hash - Returns a hash with:
     # - keys = players in this game room
     # - values = an array of the missions that player completed in this game room.
@@ -57,6 +65,18 @@ class GameRoom < ApplicationRecord
     # game_room#winner - Returns the player's name who completed all this game room's missions first
     def winner_name
         winner.name
+    end
+
+    def comments_sorted_oldest_first
+        comments.sort_by {|comment| comment.datetime}
+    end
+
+    def comments_sorted_most_recent_first
+        comments_sorted_oldest_first.reverse
+    end
+
+    def game_room_unreviewed_comments
+        comments_sorted_oldest_first.select {|comment| comment.approved.nil?}
     end
 
 end

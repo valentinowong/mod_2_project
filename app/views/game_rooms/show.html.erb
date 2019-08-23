@@ -1,8 +1,16 @@
 <div class="container">
 <div class="game-info">
     <h1><%= @game_room.admin_name %>'s <%= @game_room.game_name %></h1>
-    <% if @game_room.active %>
-        <h2 class="green-font">ACTIVE</h2>
+    <% if @game_room.winner == @current_user %>
+        <div class="text-success">
+            <h2>You won this game!</h2>
+        </div>
+    <% elsif !@game_room.players_who_completed_all_missions.empty? %>
+        <div class="text-success">
+            <h2>This game's winner is <%= @game_room.winner_name %>!</h2>
+        </div>
+    <% elsif @game_room.active%>
+        <h2 class="text-success">ACTIVE</h2>
     <% end %>
         <p><%= @game_room.game_description %></p>
 </div>
@@ -11,22 +19,8 @@
 <% if @game_room.admin == @current_user %>
     <div class="game-room admin">
 
-        <h2>Admin Powers:</h2>
+        <%= link_to "View Admin Page", game_room_admin_path(@game_room), class: "btn btn-primary" %>
 
-        <% if @game_room.active %>
-            <%= button_to "Deactivate This Game", deactivate_game_room_path(@game_room), method: :post %><br>
-        <% else %>
-            <%= button_to "Activate This Game", activate_game_room_path(@game_room), method: :post %><br>
-        <% end %>
-
-        <%= button_to 'Delete This Game Room', game_room_path(@game_room), method: :delete, data: { confirm: "Are you sure?" } %>
-
-    </div>
-<% end %>
-
-<% if !@game_room.players_who_completed_all_missions.empty? %>
-    <div class="game-room winner">
-        <h3>This game's winner is <%= @game_room.winner_name %>!</h3>
     </div>
 <% end %>
 
@@ -47,8 +41,8 @@
 
         <% if !!@current_game_player && (@game_room.admin != @current_user) %>
 
-            <%= button_to 'Leave This Game Room', game_player_path(@current_game_player), method: :delete %>
-
+            <%= button_to 'Leave This Game Room', game_player_path(@current_game_player), method: :delete, class: "btn btn-danger" %>
+        
         <% end %>
     
     <%# Show this section if the current user is not the admin and they're not a player in this game room%>
@@ -56,12 +50,12 @@
 
         <%= form_for @game_player do |f| %>
             <%= f.hidden_field :game_room_id, value: @game_room.id %>
-            <%= f.submit "Join This Game"%>
+            <%= f.submit "Join This Game Room", class: "btn btn-success" %>
         <% end%>
 
-        <%= link_to "Return to Game Room List", game_rooms_path %><br>
-
     <% end %>
+    
+    <%= link_to "Return to Game Room List", game_rooms_path, class: "badge badge-secondary" %><br>
 
 </div>
 
@@ -69,94 +63,117 @@
 <%# Show this section if the game is active or if this is the current user is the game room admin%>
 <% if @game_room.active || (@game_room.admin == @current_user) %>
 
-    <div class="game-room missions">
-
-        <h2>Missions</h2>
+    <h2>Missions</h2>
         
-        <div class="row">
-            
-            <% @game_room.missions.each do |mission| %>
+        <% @game_room.missions.each do |mission| %>
 
-                <div class="col-lg-2 col-md-4 col-sm-12">
+            <% if @current_user.game_room_completed_missions(@game_room).include?(mission)%>
+                <div class="card border-success mb-3">
+                    <div class="card-header">
+                        <h4>✅ <%= mission.name %></h4>
+                    </div>
+                    <div class="card-body text-success">
+            <% elsif @current_user.game_room_unreviewed_missions(@game_room).include?(mission) %>
+                <div class="card border-warning mb-3">
+                    <div class="card-header">
+                        <h4>⚠️ <%= mission.name %> - You have a photo pending!</h4>
+                    </div>
+                    <div class="card-body text-warning">
+            <% elsif @current_user.game_room_rejected_missions(@game_room).include?(mission) %>
+                <div class="card border-danger mb-3">
+                    <div class="card-header">
+                        <h4>🚫 <%= mission.name %> - Your photo was rejected!</h4>
+                    </div>
+                    <div class="card-body text-danger">
+            <% else %>
+                <div class="card border-secondary mb-3">
+                    <div class="card-header">
+                        <h4><%= mission.name %></h4>
+                    </div>
+                    <div class="card-body">
+            <% end %>
 
-                    <% if @game_room.admin == @current_user %>
-                        <h4><%= mission.name %>: <%= mission.content %></h4>
-                    <% elsif @current_user.game_room_completed_missions(@game_room).include?(mission) %>
-                        <h4 class="green-border"><%= mission.name %>: <%= mission.content %></h4>
-                    <% elsif @current_user.game_room_unreviewed_missions(@game_room).include?(mission)%>
-                        <h4 class="orange-border"><%= mission.name %>: <%= mission.content %></h4>
-                    <% else %>
-                        <h4 class="red-border"><%= mission.name %>: <%= mission.content %></h4>
-                    <% end %>
+                
+                        <h5 class="card-title"><%= mission.content %></h5><hr>
+                    </div>
 
-                    <% if @game_room.admin != @current_user %>
-
-                        <div class="">
-
+                    <% if !@game_room.complete && (@game_room.admin != @current_user) && !@current_user.game_room_completed_missions(@game_room).include?(mission) %>
+                        <div class="card-text">
                             <%= form_for @comment do |f| %>
                                 
                                 <%= f.hidden_field :game_room_id, value: @game_room.id %>
                                 <%= f.hidden_field :user_id, value: @current_user.id %>
                                 <%= f.hidden_field :mission_id, value: mission.id %>
-                                
-                                <%= f.label :photo %>
-                                <%= f.file_field :photo %><br>
 
-                                <%= f.label "Add a Comment" %>
-                                <%= f.text_field :content %><br>
+                                <div class="form-group">
+                                    <%= f.file_field :photo, class: "form-control-file" %>
+                                </div>
 
-                                <%= f.submit "Submit" %>
+                                <div class="form-group">
+                                    <%= f.text_field :content, placeholder: "Add a comment" %>
+                                </div>
+
+                                <%= f.submit "Submit", class: "btn btn-secondary" %><br>
 
                             <% end %>
-
                         </div>
 
                     <% end %>
 
                 </div>
 
-            <% end %>
+        <% end %>
 
-        </div>
-    </div>
 <% end %>
 
 <h3>Comments</h3>
 
-<div class="card-group">
-
-    <% @game_room.comments.each do |comment| %>
+    <% @game_room.comments_sorted_most_recent_first.each do |comment| %>
         
-        <div class="card">
-            
-            <%= image_tag comment.photo, class: "card-img-top" %>
-            
-            <div class="card-body">
+        <div class="card border-secondary mb-3">
+            <div class="card-header">
 
-                <h5 class="card-title"><%= comment.mission_name %></h5>
-                <p class="card-text">"<%= comment.content %>" -<%= comment.user_name %></p>
                 <% if comment.approved %>
-                    <p>This comment has been approved!</p>
+                    <h5 class="card-title">✅ <%= comment.mission_name %></h5>
+                <% elsif comment.approved == false %>
+                    <h5 class="card-title">🚫 <%= comment.mission_name %></h5>
+                <% else %>
+                    <h5 class="card-title"><%= comment.mission_name %></h5>
                 <% end %>
+                <p><%= comment.mission_content %></p>
 
                 <% if @game_room.admin == @current_user %>
 
                         <%= form_for comment do |f| %>
                             <%= f.hidden_field :approved, value: true %>
-                            <%= f.submit "Approve"%>
+                            <%= f.submit "Approve", class: "btn btn-success" %>
                         <% end%>
 
                         <%= form_for comment do |f| %>
                             <%= f.hidden_field :approved, value: false %>
-                            <%= f.submit "Reject"%>
+                            <%= f.submit "Reject", class: "btn btn-danger"%>
                         <% end%>
 
                 <% end %>
+            </div>
+            <%= image_tag comment.photo, class: "card-img-top", class: "img-fluid" %>
+            
+            <div class="card-body text-center">
+                
+                <% if !comment.content.empty? %>
+                    <p class="card-text">"<%= comment.content %>" -<%= link_to comment.user_name, user_path(comment.user) %></p>
+                <% else %>
+                    <p class="card-text">-<%= link_to comment.user_name, user_path(comment.user) %></p>
+                <% end %>
+
+            </div>
+
+            <div class="card-footer text-muted">
+
+                <%= comment.display_datetime %>
 
             </div>
 
         </div>
 
     <% end %>
-
-</div>

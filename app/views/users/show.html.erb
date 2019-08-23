@@ -1,0 +1,38 @@
+<h1><%= @user.name %>'s Photos</h1>
+
+    <% @user.comments_sorted_most_recent_first.each do |comment| %>
+        
+        <div class="card border-secondary mb-3">
+            <div class="card-header">
+
+                <% if comment.approved %>
+                    <h5 class="card-title">✅ <%= comment.game_room_admin_name %>'s <%= comment.game_room_game_name %> - <%= comment.mission_name %></h5>
+                <% elsif comment.approved == false %>
+                    <h5 class="card-title">🚫 <%= comment.game_room_admin_name %>'s <%= comment.game_room_game_name %> - <%= comment.mission_name %></h5>
+                <% else %>
+                    <h5 class="card-title"><%= comment.game_room_admin_name %>'s <%= comment.game_room_game_name %> - <%= comment.mission_name %></h5>
+                <% end %>
+                <p><%= comment.mission_content %></p>
+
+            </div>
+            <%= image_tag comment.photo, class: "card-img-top", class: "img-fluid" %>
+            
+            <div class="card-body text-center">
+                
+                <% if !comment.content.empty? %>
+                    <p class="card-text">"<%= comment.content %>" -<%= comment.user_name %></p>
+                <% else %>
+                    <p class="card-text">-<%= comment.user_name %></p>
+                <% end %>
+
+            </div>
+
+            <div class="card-footer text-muted">
+
+                <%= comment.display_datetime %>
+
+            </div>
+
+        </div>
+
+    <% end %>

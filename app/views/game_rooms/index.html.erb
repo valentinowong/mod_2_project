@@ -2,13 +2,16 @@
 
 <h3 class="center">Choose a Game Room:</h3>
 
-<% @game_rooms.each do |game_room| %>
-
-    <h4><%= link_to game_room.game_name, game_room_path(game_room) %></h4>
-    <h6>Info About <%=game_room.game_name%></h6>
-        <ul>
-            <li><%= game_room.game_description %></li>
-            <li>Creator: <%= game_room.admin_name %></li>
-        </ul>
-
-<% end %>
+<div class="container">
+    <% @game_rooms.each do |game_room| %>
+        <div class="card border-secondary mb-3 text-center">
+            <div class="card-header">
+                <%= link_to game_room.admin_name + "'s " + game_room.game_name, game_room_path(game_room) %>
+            </div>
+            <div class="card-body">
+                <%= game_room.game_description %><hr>
+                <%= link_to "View This Game Room", game_room_path(game_room), class: "btn btn-primary" %>
+            </div>
+        </div>
+    <% end %>
+</div>

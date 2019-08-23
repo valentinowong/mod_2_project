@@ -7,13 +7,17 @@ class UsersController < ApplicationController
   
     def create
       @user = User.create(user_params)
-      if params[:user][:password] == params[:user][:password_confirmation]
+      if @user.valid?
         session[:user_id] = @user.id
         redirect_to root_path
       else
-       flash[:errors] = @user.errors.full_messages
+        flash[:errors] = @user.errors.full_messages
         redirect_to new_user_path
       end
+    end
+
+    def show
+      @user = User.find(params[:id])
     end
   
     private
