@@ -62,6 +62,11 @@ class User < ApplicationRecord
         game_room_approved_comments(game_room).map {|comment| comment.mission }.uniq
     end
 
+    # user#number_of_game_room_completed_missions - Returns the number of completed missions for a specific game room for this *player's* 
+    def number_of_game_room_completed_missions(game_room)
+        game_room_completed_missions(game_room).count
+    end
+
     # user#completed_all_game_room_missions? - Returns true if a player has completed all the missions for a specific game room
     def completed_all_game_room_missions?(game_room)
         game_room.missions.all? {|mission| game_room_completed_missions(game_room).include?(mission)}

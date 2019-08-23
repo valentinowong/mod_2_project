@@ -25,9 +25,9 @@
         <ul>
             <% @game_room.players.each do |player| %>
                 <% if player == @current_user %>
-                    <li class='bold'><%= player.name %></li>
+                    <li class='bold'><%= player.name %><%= (" - " + player.number_of_game_room_completed_missions(@game_room).to_s) if @game_room.active %></li>
                 <% else %>
-                    <li><%= player.name %></li>
+                    <li><%= player.name %><%= (" - " + player.number_of_game_room_completed_missions(@game_room).to_s) if @game_room.active %></li>
                 <% end %>
             <% end %>
         </ul>
@@ -152,8 +152,8 @@
 
                 <% end %>
             </div>
-            
-            <% if comment.photo %>
+
+            <% if comment.photo.attached? %>
                 <%= image_tag comment.photo, class: "card-img-top", class: "img-fluid" %>
             <% end %>
             
