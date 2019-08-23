@@ -152,7 +152,10 @@
 
                 <% end %>
             </div>
-            <%= image_tag comment.photo, class: "card-img-top", class: "img-fluid" %>
+            
+            <% if comment.photo %>
+                <%= image_tag comment.photo, class: "card-img-top", class: "img-fluid" %>
+            <% end %>
             
             <div class="card-body text-center">
                 
