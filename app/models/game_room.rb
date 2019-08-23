@@ -79,4 +79,8 @@ class GameRoom < ApplicationRecord
         comments_sorted_oldest_first.select {|comment| comment.approved.nil?}
     end
 
+    def display_created_at
+        created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%A, %b %-d %Y -%l:%M%p")
+    end
+
 end

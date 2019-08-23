@@ -12,6 +12,9 @@
                 <%= game_room.game_description %><hr>
                 <%= link_to "View This Game Room", game_room_path(game_room), class: "btn btn-primary" %>
             </div>
+            <div class="card-footer text-muted">
+                Created <%= game_room.display_created_at %>
+            </div>
         </div>
     <% end %>
 </div>
