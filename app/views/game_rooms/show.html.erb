@@ -1,27 +1,23 @@
-<div class="container">
-<div class="game-info">
-    <h1><%= @game_room.admin_name %>'s <%= @game_room.game_name %></h1>
-    <% if @game_room.winner == @current_user %>
-        <div class="text-success">
-            <h2>You won this game!</h2>
-        </div>
-    <% elsif !@game_room.players_who_completed_all_missions.empty? %>
-        <div class="text-success">
-            <h2>This game's winner is <%= @game_room.winner_name %>!</h2>
-        </div>
-    <% elsif @game_room.active%>
-        <h2 class="text-success">ACTIVE</h2>
-    <% end %>
-        <p><%= @game_room.game_description %></p>
-</div>
+
+<h1><%= @game_room.admin_name %>'s <%= @game_room.game_name %></h1>
+<% if @game_room.winner == @current_user %>
+    <div class="text-success">
+        <h2>You won this game!</h2>
+    </div>
+<% elsif !@game_room.players_who_completed_all_missions.empty? %>
+    <div class="text-success">
+        <h2>This game's winner is <%= @game_room.winner_name %>!</h2>
+    </div>
+<% elsif @game_room.active%>
+    <h2 class="text-success">ACTIVE</h2>
+<% end %>
+    <p><%= @game_room.game_description %></p>
 
 <%# Show this section if the current user is the admin of this game room%>
 <% if @game_room.admin == @current_user %>
-    <div class="game-room admin">
 
         <%= link_to "View Admin Page", game_room_admin_path(@game_room), class: "btn btn-primary" %>
 
-    </div>
 <% end %>
 
 <div class="game-room players">

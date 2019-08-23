@@ -33,6 +33,16 @@
    transition: 0.2s;
  }
 
+ nav.navbar a.nav-link {
+  color: #fff;
+ }
+
+ nav.navbar a.nav-link:hover {
+  color: #D2D1CB;
+  transform: scale(1.05);
+  /* outline: 5px solid #87B6A7; */
+}
+
  nav.navbar a.navbar-brand:hover {
    color: #D2D1CB;
    transform: scale(1.05);

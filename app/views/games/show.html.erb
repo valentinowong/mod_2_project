@@ -1,22 +1,25 @@
-<div class="container">
 <h1 class="center"><%= @game.name %></h1>
 <p class="center"><%= @game.description %></p>
 
-<h4 class="game">Missions for <%= @game.name %></h4>
-<ul class="list-group">
-    <% @game.missions.each do |mission| %>
-        <li class="list-group-item list-group-item-dark"><%= mission.name%>: <%= mission.content %></li>
-        <% end %>
-</ul>
+<h2 class="game">Missions</h2>
 
+        <% @game.missions.each do |mission| %>
+                
+                <div class="card border-secondary mb-3">
+                        <div class="card-header">
+                                <h4><%= mission.name%></h4>
+                        </div>
+
+                        <div class="card-body">
+                                <%= mission.content %>
+                        </div>
+                </div>
+        <% end %>
 
 <%= form_for @game_room do |f| %>
-    <%= f.hidden_field :game_id, value: @game.id %>
-    <button type="submit" class="btn btn-primary">Make Gameroom</button>
+        <%= f.hidden_field :game_id, value: @game.id %>
+        <%= f.submit "Make Gameroom", class: "btn btn-primary"%>
 <% end%>
 <br>
 
 <%= link_to "Return to Game List", games_path, class: "btn btn-lg btn-primary" %>
-
-
-</div>

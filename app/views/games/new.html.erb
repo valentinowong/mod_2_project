@@ -1,34 +1,26 @@
-<div class="container">
 <h1 class="center">Create a new game</h1>
 <%= form_for @game do |f| %>
 
-<%= f.label :"Game Name" %>
-
-<%= f.text_field :name, class: "form-control form-control-lg"%><br>
-
-
-<%= f.label :"Game Description" %>
-
-<%= f.text_area :description, class: "form-control form-control-lg"%><br>
+  <%= f.label :"Game Name" %>
+  <%= f.text_field :name, class: "form-control form-control-lg"%><br>
 
 
-
+  <%= f.label :"Game Description" %>
+  <%= f.text_area :description, class: "form-control form-control-lg"%><br>
 
 <h4 class="center">Create up to seven missions for your scavenger hunt!</h4>
-<% count = 0 %>
-<% 7.times do %>
+  <% count = 0 %>
+  <% 7.times do %>
     <% count += 1 %>
     <h4>Mission #<%= count %></h4>
-  <%= f.fields_for :missions do |miss| %>
-    <%= miss.label :name %>
-    <%= miss.text_field :name, class: "form-control"%><br>
-    <%= miss.label :description %>
-    <%= miss.text_area :content, class: "form-control" %><br>
+    <%= f.fields_for :missions do |miss| %>
+      <%= miss.label :name %>
+      <%= miss.text_field :name, class: "form-control"%><br>
+      <%= miss.label :description %>
+      <%= miss.text_area :content, class: "form-control" %><br>
     <% end %>
-<%end %>
+  <%end %>
+
 <button type="submit" class="btn btn-primary">Make New Game</button>
+
 <% end %>
-</div>
-
-
-
