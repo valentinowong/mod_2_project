@@ -83,4 +83,8 @@ class GameRoom < ApplicationRecord
         created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%A, %b %-d %Y -%l:%M%p")
     end
 
+    def self.sorted_most_recent_first
+        self.all.reverse
+    end
+
 end

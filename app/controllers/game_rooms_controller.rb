@@ -7,7 +7,7 @@ class GameRoomsController < ApplicationController
     end 
     
     def index
-        @game_rooms = GameRoom.all
+        @game_rooms = GameRoom.sorted_most_recent_first
     end
 
     def show
