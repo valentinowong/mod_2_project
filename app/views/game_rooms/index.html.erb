@@ -5,14 +5,16 @@
     <% @game_rooms.each do |game_room| %>
         <div class="card border-secondary mb-3 text-center">
             <div class="card-header">
-                <%= link_to game_room.admin_name + "'s " + game_room.game_name + ( game_room.complete ? " - Complete" : "" ), game_room_path(game_room) %>
+                <%= game_room.admin_name + "'s " + game_room.game_name + ( game_room.complete ? " - Complete" : "" ) %>
             </div>
             <div class="card-body">
                 <%= game_room.game_description %><hr>
-                <%= link_to "View This Game Room", game_room_path(game_room), class: "btn btn-primary" %>
-                <% if game_room.winner %>
-                    <%= game_room.winner_name %>
-                <% end %>
+                <%= link_to "View This Game Room", game_room_path(game_room), class: "btn btn-primary" %><br>
+                <div class="text-success">
+                    <% if game_room.winner %>
+                        <%= "Winner - " + game_room.winner_name %>
+                    <% end %>
+                </div>
             </div>
             <div class="card-footer text-muted">
                 Created <%= game_room.display_created_at %>
