@@ -78,7 +78,7 @@
             <% elsif @current_user.game_room_rejected_missions(@game_room).include?(mission) %>
                 <div class="card border-danger mb-3">
                     <div class="card-header">
-                        <h4>🚫 <%= mission.name %> - Your photo was rejected!</h4>
+                        <h4>🚫 <%= mission.name %> - Your photo was rejected! Upload another!</h4>
                     </div>
                     <div class="card-body text-danger">
             <% else %>
@@ -152,7 +152,7 @@
 
                 <% end %>
             </div>
-            <%= image_tag comment.photo, class: "card-img-top", class: "img-fluid" %>
+            <%= image_tag comment.photo, class: "card-img-top", class: "img-fluid", auto_orient: true %>
             
             <div class="card-body text-center">
                 
