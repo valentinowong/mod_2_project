@@ -17,6 +17,7 @@ class GamesController < ApplicationController
     end 
 
     def create
+        byebug
         @game = Game.create(params_)
         redirect_to game_path(@game)
     end 
@@ -25,13 +26,13 @@ class GamesController < ApplicationController
 
     def params_
         params.require(:game).permit(
-        :name,
-        :description,
-        missions_attributes: [
-        :name,
-        :content,
-        :game_id
-        ]
+            :name,
+            :description,
+            missions_attributes: [
+                :name,
+                :content,
+                :game_id
+            ]
         )
     end 
 
